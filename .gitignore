@@ -1,3 +1,7 @@
+secrets.json
+
+*.exe
+
 nimcache/
 nimblecache/
 htmldocs/
