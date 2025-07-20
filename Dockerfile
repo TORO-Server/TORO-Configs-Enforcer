@@ -10,8 +10,8 @@ FROM debian:12-slim
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y --no-install-recommends libpcre3 && rm -rf /var/lib/apt/lists/*
-
 COPY --from=builder /app/TORO_Configs_Enforcer /TORO_Configs_Enforcer
+
+RUN apt-get update && apt-get install libpcre3
 
 CMD ["/TORO_Configs_Enforcer"]
