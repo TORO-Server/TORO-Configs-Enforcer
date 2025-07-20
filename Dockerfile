@@ -6,14 +6,12 @@ COPY . .
 
 RUN nimble build -d:release --passL:"-static"
 
-FROM alpine:latest
+FROM debian:12-slim
 
 WORKDIR /app
 
-RUN apk add --no-cache pcre
+RUN apt-get update && apt-get install -y --no-install-recommends libpcre3 && rm -rf /var/lib/apt/lists/*
 
-# builder から コンパイル済みの実行ファイルのみをコピー
 COPY --from=builder /app/TORO_Configs_Enforcer /TORO_Configs_Enforcer
 
-# コンテナ起動時に実行するコマンドを指定
 CMD ["/TORO_Configs_Enforcer"]
