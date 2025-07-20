@@ -1,4 +1,4 @@
-import asyncdispatch, os, strutils, sequtils, std/strformat
+import asyncdispatch, os, strutils, std/strformat
 
 import secret, file
 
@@ -6,10 +6,7 @@ import secret, file
 proc main() {.async.} =
   try:
     # 置換ルール 生成
-    let replace_rule = getEnvKeys("secrets.json").map(
-        proc(key: string): (string, string) =
-      (fmt"[[{key}]]", getEnv(key, ""))
-    )
+    let replace_rule = getEnvMap()
     # 非同期タスクのリスト
     var tasks: seq[Future[void]]
     # カレントディレクトリ 探索(再帰的)

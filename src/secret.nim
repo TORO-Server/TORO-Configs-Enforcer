@@ -1,8 +1,10 @@
-import json
+import os
+import re
+import std/strformat
 
-proc getEnvKeys*(filePath: string): seq[string] =
-  try:
-    # `to`手続きで seq[string] に変換
-    return to(parseFile(filePath), seq[string])
-  except JsonParsingError as e:
-    raise e
+proc getEnvMap*(): seq[(string, string)] =
+  var envMap: seq[(string, string)] = @[]
+  for key, value in envPairs():
+    if key.match(re".+:.+"):
+      envMap.add((fmt"[[{key}]]", value))
+  return envMap
